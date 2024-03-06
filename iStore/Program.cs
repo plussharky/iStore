@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using iStore.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,12 +32,25 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllerRoute("catpage",
+ "{category}/Page{productPage:int}",
+ new { Controller = "Home", action = "Index" });
+
+app.MapControllerRoute("page", "Page{productPage:int}",
+ new { Controller = "Home", action = "Index", productPage = 1 });
+
+app.MapControllerRoute("category", "{category}",
+ new { Controller = "Home", action = "Index", productPage = 1 });
+
 app.MapControllerRoute(
     name: "pagination",
-    pattern: "Products/Page{productPage}",
-    defaults: new { Controller = "Home", action = "Index" }) ;
+    pattern: "Page{productPage}",
+    defaults: new { Controller = "Home", action = "Index", productPage = 1 });
 
-app.MapDefaultControllerRoute();
+app.MapControllerRoute(
+    name: "pagination",
+    pattern: "/",
+    defaults: new { Controller = "Home", action = "Index", productPage = 1 });
 
 SeedData.EnsurePopulated(app);
 
