@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iStore", "iStore\iStore.csproj", "{D53C8773-945B-434C-AA66-788C0C824C17}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iStore.Tests", "iStore.Tests\iStore.Tests.csproj", "{6D058C7F-C640-432F-BD42-4756B466883B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iStore", "iStore\iStore.csproj", "{D53C8773-945B-434C-AA66-788C0C824C17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{D53C8773-945B-434C-AA66-788C0C824C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D53C8773-945B-434C-AA66-788C0C824C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D53C8773-945B-434C-AA66-788C0C824C17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D058C7F-C640-432F-BD42-4756B466883B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D058C7F-C640-432F-BD42-4756B466883B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D058C7F-C640-432F-BD42-4756B466883B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D058C7F-C640-432F-BD42-4756B466883B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

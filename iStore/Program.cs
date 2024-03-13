@@ -14,6 +14,16 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
 });
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
+builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 var app = builder.Build();
 
@@ -27,10 +37,16 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "Order",
+    pattern: "/Order",
+    defaults: new { Controller = "Order", action = "Checkout" });
 
 app.MapControllerRoute("catpage",
  "{category}/Page{productPage:int}",
@@ -51,6 +67,8 @@ app.MapControllerRoute(
     name: "pagination",
     pattern: "/",
     defaults: new { Controller = "Home", action = "Index", productPage = 1 });
+
+app.MapRazorPages();
 
 SeedData.EnsurePopulated(app);
 

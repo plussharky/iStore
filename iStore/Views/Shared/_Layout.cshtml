@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/iStore.styles.css" asp-append-version="true" />
+    <link href="/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <div class="bg-dark text-white p-2">
-            <span class="navbar-brand ml-2">iStore</span>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col navbar-brand">iStore</div>
+                    <div class="col-6 navbar-text text-end">
+                        <vc:cart-summary />
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row m-1 p-1">
             <div id="categories" class="col-3">
