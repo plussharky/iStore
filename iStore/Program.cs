@@ -1,4 +1,5 @@
 using iStore.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,11 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<StoreDbContext>(opts =>
+builder.Services.AddDbContext<StoreDbContext>(options =>
 {
-    //opts.UseSqlServer(builder.Configuration["ConnectionStrings:iStoreConnection"]);
-
-    opts.UseSqlite(builder.Configuration["ConnectionStrings:SQLite"]);
+    options.UseSqlite(builder.Configuration["ConnectionStrings:iStoreConnection"]);
 });
 
 builder.Services.AddScoped<IStoreRepository, EFStoreRepository>();
@@ -26,6 +25,23 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddServerSideBlazor();
 
+builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration["ConnectionStrings:IdentityConnection"]);
+});
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 4; 
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false; 
+    options.Password.RequireLowercase = false; 
+    options.Password.RequiredUniqueChars = 0;
+})
+    .AddEntityFrameworkStores<AppIdentityDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +55,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseRouting();
 
@@ -74,5 +93,6 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/admin/{*catchall}", "/Admin/Index");
 
 SeedData.EnsurePopulated(app);
+IdentitySeedData.EnsurePopulated(app);
 
 app.Run();
